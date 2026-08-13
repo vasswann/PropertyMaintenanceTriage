@@ -9,6 +9,11 @@ namespace PropertyMaintenanceTriage.Services
         {
             string json = File.ReadAllText(filePath);
 
+            return LoadFromJson(json);
+        }
+
+        public List<MaintenanceTicket> LoadFromJson(string json)
+        {
             List<MaintenanceTicket>? tickets = JsonSerializer.Deserialize<List<MaintenanceTicket>>(json);
 
             return tickets ?? new List<MaintenanceTicket>();

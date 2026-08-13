@@ -1,22 +1,16 @@
-﻿
+﻿using PropertyMaintenanceTriage.Cli;
 using PropertyMaintenanceTriage.Models;
 using PropertyMaintenanceTriage.Services;
 
 ITicketLoader ticketLoader = new TicketLoader();
 IPriorityService priorityService = new PriorityService();
 IContractorService contractorService = new ContractorService();
-
 ITriageService triageService = new TriageService(priorityService, contractorService);
 
-string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "maintenance-tickets.json");
+ConsoleUi consoleUi = new ConsoleUi();
 
-List<MaintenanceTicket> tickets = ticketLoader.LoadFromFile(filePath);
+List<MaintenanceTicket> tickets = consoleUi.GetTickets(ticketLoader);
 
-foreach (MaintenanceTicket ticket in tickets)
-{
-    TriageResult result = triageService.TriageTicket(ticket);
+List<TriageResult> results = tickets.Select(ticket => triageService.TriageTicket(ticket)).ToList();
 
-    Console.WriteLine(
-        $"{result.TicketId} | {result.Address} | {result.AssignedContractor} | {result.Priority}"
-    );
-}
+consoleUi.DisplayResults(results);
