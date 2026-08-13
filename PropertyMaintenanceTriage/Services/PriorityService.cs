@@ -1,4 +1,5 @@
 ﻿using PropertyMaintenanceTriage.Enums;
+using PropertyMaintenanceTriage.Helpers;
 
 namespace PropertyMaintenanceTriage.Services
 {
@@ -29,22 +30,17 @@ namespace PropertyMaintenanceTriage.Services
                 return Priority.Medium;
             }
 
-            if (ContainsAnyKeyword(issueDescription, UrgentKeywords))
+            if (KeywordMatcher.ContainsAny(issueDescription, UrgentKeywords))
             {
                 return Priority.Urgent;
             }
 
-            if (ContainsAnyKeyword(issueDescription, LowKeywords))
+            if (KeywordMatcher.ContainsAny(issueDescription, LowKeywords))
             {
                 return Priority.Low;
             }
 
             return Priority.Medium;
-        }
-
-        private static bool ContainsAnyKeyword(string description, string[] keywords)
-        {
-            return keywords.Any(keyword => description.Contains(keyword, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
