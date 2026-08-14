@@ -43,8 +43,7 @@ namespace PropertyMaintenanceTriage.Cli
         public void DisplayResults(List<TriageResult> results)
         {
             Console.WriteLine();
-            Console.WriteLine(
-                $"{"Ticket ID",-12} {"Address",-30} {"Contractor",-20} {"Priority",-10}");
+            Console.WriteLine($"{"Ticket ID",-12} {"Address",-30} {"Contractor",-20} {"Priority",-10}");
 
             Console.WriteLine(new string('-', 75));
 
